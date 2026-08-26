@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Much RAM Does Your VPS Actually Need? (By Workload)</title>
+<meta name="description" content="Stop overbuying RAM. Here's the actual memory you need for WordPress, game servers, bots, Docker, and automation nodes on a VPS.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:46rem;margin:0 auto;padding:2rem 1.5rem;line-height:1.65;color:#111}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #d9dde1;padding:.55rem;text-align:left}th{background:#f0f3f6}
+.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{color:#777;font-size:.85rem;padding:2rem 0;text-align:center}</style></head><body>
+<h1>How Much RAM Does Your VPS Actually Need? (By Workload)</h1>
+<p>The honest answer: <strong>most people over-provision.</strong> RAM is the spec people buy too much of because it's the easiest number to compare. Here's the real sizing guide by workload.</p>
+
+<table><tr><th>Workload</th><th>Recommended RAM</th><th>Notes</th></tr>
+<tr><td>Static site / reverse proxy</td><td>512 MB – 1 GB</td><td>Nginx or Caddy barely touches RAM</td></tr>
+<tr><td>WordPress (1–2 sites)</td><td>1–2 GB</td><td>2 GB if you use heavy page builders</td></tr>
+<tr><td>Lightweight Docker stack (3–5 containers)</td><td>2 GB</td><td>Watch out for databases</td></tr>
+<tr><td>Minecraft / small game server</td><td>2–4 GB</td><td>Minecraft is RAM-hungry; check server type</td></tr>
+<tr><td>n8n + Uptime Kuma automation</td><td>2 GB</td><td>Comfortable at 1 GB if you trim workflows</td></tr>
+<tr><td>Bots (Discord/Telegram, single)</td><td>1 GB</td><td>Plenty for a single bot</td></tr>
+<tr><td>Multiple apps + databases</td><td>4 GB</td><td>The "everything at once" box</td></tr></table>
+
+<h2>The trap nobody warns you about</h2>
+<p>RAM isn't the only axis — a 2 GB box with a slow CPU or spinning disk can feel worse than a 1 GB box with an NVMe. When you pick a provider, <em>storage type matters as much as RAM.</em> See the <a href="index.html">full comparison</a> for which budget hosts ship NVMe.</p>
+
+<h2>Start small, grow deliberately</h2>
+<p>The killer move is to start at 1–2 GB, watch real memory usage with <code>htop</code> or a monitoring agent for a week, and scale up only when swap starts getting hit. Most sites never need the upgrade.</p>
+
+<p><a class="cta" href="index.html">Compare cheap VPS prices →</a></p>
+</body></html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Red Flags of "Unlimited" Budget Hosts (And What to Buy Instead)</title>
+<meta name="description" content="Unlimited bandwidth and 'unlimited everything' hosting almost always hides TOS traps and oversold nodes. Here's how to spot them and what to buy instead.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:46rem;margin:0 auto;padding:2rem 1.5rem;line-height:1.65;color:#111}
+.flag{border-left:4px solid #dc2626;background:#fef2f2;padding:1rem;margin:1rem 0;border-radius:0 8px 8px 0}
+.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{color:#777;font-size:.85rem;padding:2rem 0;text-align:center}</style></head><body>
+<h1>Red Flags of "Unlimited" Budget Hosts</h1>
+<p>"Unlimited" is a marketing word, not a spec. Every host has a limit — the honest ones name theirs; the shady ones hide them in a TOS paragraph nobody reads. Here's what to watch for and what to buy instead.</p>
+
+<h2>The red flags</h2>
+<div class="flag"><strong>1. "Unlimited bandwidth" without a fair-use clause you can actually read.</strong> If the "unlimited" has a footnote, that's the real policy. Common traps: CPU limits on "unlimited" plans, or throttling after a soft threshold.</div>
+<div class="flag"><strong>2. Oversold nodes.</strong> A $1/mo "unlimited" VPS is sharing a single node with dozens of neighbors. Your neighbors' load is your load.</div>
+<div class="flag"><strong>3. No honest CPU spec.</strong> "1 CPU" on a budget host often means a tiny share of one core, not a dedicated one. Compare vCPU counts and whether they're shared or dedicated.</div>
+<div class="flag"><strong>4. Storage fine print.</strong> "Unlimited disk" usually means you're on a shared spinning disk, not NVMe — and there's a hidden max inode or file count.</div>
+<div class="flag"><strong>5. Migration horror stories.</strong> Cheap hosts lock data and make transfers painful. Check if you can snapshot and export before you commit.</div>
+
+<h2>What to buy instead</h2>
+<p>The right move is a provider that names its limits honestly and gives you a fair price for real resources. In our 60-day test, the hosts that were <em>honest</em> about specs — <a href="index.html">Hetzner, Vultr, DigitalOcean</a> — outperformed the "unlimited" ones on uptime and consistency. You pay a few dollars more, but you don't pay in surprise throttling and support tickets.</p>
+
+<h2>The one-sentence rule</h2>
+<p>If a host advertises "unlimited" of anything, find the number in the TOS. If you can't, that number is whatever they decide it is that week.</p>
+
+<p><a class="cta" href="index.html">Buy a host with honest limits →</a></p>
+</body></html>

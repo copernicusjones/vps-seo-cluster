@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Self-Hosting Automation Tools on a $5 VPS (n8n, Uptime Kuma, More)</title>
+<meta name="description" content="Run n8n, Uptime Kuma, and your own automation stack on a $5 VPS — with backup and security that actually protects your data.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:46rem;margin:0 auto;padding:2rem 1.5rem;line-height:1.65;color:#111}
+pre{background:#f4f6f8;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#f0f3f6;padding:.1em .3em;border-radius:4px}
+.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{color:#777;font-size:.85rem;padding:2rem 0;text-align:center}</style></head><body>
+<h1>Self-Hosting Automation Tools on a $5 VPS</h1>
+<p>You don't need a big cloud bill to run your own automation stack. Here's how to run <strong>n8n</strong> (workflow automation), <strong>Uptime Kuma</strong> (monitoring), and a couple of side tools on a single cheap VPS.</p>
+
+<h2>Why self-host instead of free tiers</h2>
+<p>Free SaaS tiers come with limits and, often, data residency you don't control. A $5 VPS gives you full control, no per-run costs, and the tools you already know. For anyone automating real workflows, the independence beats the sticker price of a free plan.</p>
+
+<h2>The stack</h2>
+<pre>n8n          -> workflow automation
+Uptime Kuma  -> uptime monitoring + status page
+Caddy        -> automatic HTTPS reverse proxy
+Docker       -> runs everything</pre>
+
+<h2>Quickstart (Docker Compose)</h2>
+<pre><code>services:
+  n8n:
+    image: n8nio/n8n
+    ports: ["127.0.0.1:5678:5678"]
+    volumes: ["./n8n:/home/node/.n8n"]
+    restart: unless-stopped
+  uptime-kuma:
+    image: louislam/uptime-kuma
+    ports: ["127.0.0.1:3001:3001"]
+    volumes: ["./kuma:/app/data"]
+    restart: unless-stopped</code></pre>
+<p>Expose both through Caddy for HTTPS instead of binding them to the internet directly.</p>
+
+<h2>Don't skip the backup</h2>
+<p>Your automation is data. Back up the <code>./n8n</code> and <code>./kuma</code> folders daily — <code>rsync</code> to another box or an object store. Restore from snapshot is your recovery plan. A $5 VPS with a cron backup is more resilient than most free-tier setups.</p>
+
+<h2>Security for a personal box</h2>
+<ul>
+<li>Disable root password login; use SSH keys.</li>
+<li>Firewall to only 22/80/443.</li>
+<li>Put reverse proxy in front of tools (never expose the app port).</li>
+<li>Daily unattended-upgrades for patches.</li>
+</ul>
+
+<p>Want the hardware? A 1–2 GB box from the <a href="index.html">cheap VPS comparison</a> runs this entire stack comfortably.</p>
+<p><a class="cta" href="index.html">Pick a VPS for this →</a></p>
+<p class="aff">If you buy through this link, we may earn a commission.</p>
+</body></html>
