@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Set Up a Cheap VPS With UFW + Fail2ban in 2026 (Step by Step)</title>
+<meta name="description" content="Harden a new $5 VPS in 10 minutes: SSH keys, UFW firewall, fail2ban, and auto-updates. Copy-paste commands for Ubuntu 24.04.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>Secure a New $5 VPS in 10 Minutes (2026)</h1>
+<p>Every cheap VPS is on the public internet the second it boots. Lock it down before anything else.</p></header>
+<article>
+<p><strong>Bottom line:</strong> a fresh budget VPS gets brute-forced within hours. These four steps — <strong>SSH keys, UFW, fail2ban, auto-updates</strong> — drop the attack surface to near zero and take about 10 minutes. This is the foundation of the full <a href="vps-security-checklist.html">VPS security checklist</a>.</p>
+
+<h2>Step 1 — SSH keys, disable password login</h2>
+<pre><code>ssh-keygen -t ed25519          # on your laptop
+ssh-copy-id root@YOUR_VPS_IP   # copy the key
+# on the VPS:
+sudo nano /etc/ssh/sshd_config
+#   PasswordAuthentication no
+#   PermitRootLogin prohibit-password
+sudo systemctl restart sshd</code></pre>
+
+<h2>Step 2 — UFW firewall</h2>
+<pre><code>sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp        # SSH
+sudo ufw allow 80,443/tcp    # web if you host sites
+sudo ufw enable</code></pre>
+<p>Only open the ports your apps actually use. If you run <a href="uptime-kuma-cheap-vps.html">Uptime Kuma</a>, that's 3001 — expose it only if you need public dashboards.</p>
+
+<h2>Step 3 — fail2ban for brute force</h2>
+<pre><code>sudo apt install fail2ban
+sudo systemctl enable --now fail2ban
+# default bans after 5 failed attempts, 10 min</code></pre>
+
+<h2>Step 4 — auto security updates</h2>
+<pre><code>sudo apt install unattended-upgrades
+sudo dpkg-reconfigure unattended-upgrades  # enable</code></pre>
+
+<div class="note"><p><strong>If you run Docker</strong>, apply the same logic to containers — see the <a href="docker-on-vps-starter.html">Docker starter stack</a> for a hardened Compose baseline, and don't expose ports to 0.0.0.0 unless you must.</p></div>
+
+<p><a class="cta" href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">Deploy a VPS to harden →</a></p>
+<p class="aff">Affiliate disclosure: we earn a commission on RackNerd signups at no cost to you.</p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · <a href="red-flags-unlimited-hosts.html">Unlimited-host red flags</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · © 2026</footer>
+</body></html>

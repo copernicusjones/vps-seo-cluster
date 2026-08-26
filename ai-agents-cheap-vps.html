@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Is a Cheap VPS Good Enough for AI Agents in 2026? What You Actually Need</title>
+<meta name="description" content="Run AI agents on a cheap VPS: how much RAM/CPU you really need, which models run locally, and when to call an API instead. Honest 2026 guide.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>AI Agents on a Cheap VPS (2026)</h1>
+<p>You don't need a GPU box to run agents — here's what actually matters.</p></header>
+<article>
+<p><strong>Bottom line:</strong> a <strong>cheap 2–4 GB VPS is plenty to run AI agents and automation</strong> — as long as the heavy inference happens via an API. Local model serving on budget hardware is a different, more limited story.</p>
+
+<div class="note"><p><strong>The split that matters:</strong><br>
+• <strong>Agent orchestration</strong> (calling models, chaining steps, cron, memory) → 2 GB VPS is fine.<br>
+• <strong>Local LLM serving</strong> (running a model on the box) → needs 8–16 GB + GPU for anything serious.</p></div>
+
+<h2>What runs fine on a cheap VPS</h2>
+<ul>
+<li><strong>Agent frameworks</strong> that call cloud models via API — your code just orchestrates.</li>
+<li><strong>Scheduled automation</strong> and <a href="ai-agent-vps.html">AI agent workloads</a> that don't need a GPU.</li>
+<li><strong>Tooling</strong>: web scraping, RSS, email, n8n workflows — all light on CPU/RAM.</li>
+</ul>
+<p>These are exactly the patterns in <a href="self-host-automation-5-vps.html">self-host automation on a $5 VPS</a>.</p>
+
+<h2>When you need a bigger box</h2>
+<div class="note"><p>If you insist on running a local model with no cloud calls, you need real hardware. A budget VPS will serve a tiny quantized model slowly at best. For serious local inference, see <a href="how-much-ram.html">how much RAM you actually need</a> and budget for 16 GB+.</p></div>
+
+<h2>The cheap, practical setup</h2>
+<pre><code># On a 2-4 GB VPS, run your agent as a service
+docker compose up -d  # agent container + postgres + redis
+# Point the agent at a cloud model API
+# Let it run unattended, schedule with cron</code></pre>
+
+<p><a class="cta" href="https://www.digitalocean.com/?ref=38b92847aed3" target="_blank" rel="noopener sponsored">Deploy an AI-agent VPS →</a></p>
+<p class="aff">Affiliate disclosure: we earn a commission on DigitalOcean signups at no cost to you.</p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="ai-agent-vps.html">AI agent VPS</a> · <a href="self-host-automation-5-vps.html">Self-host automation</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · © 2026</footer>
+</body></html>

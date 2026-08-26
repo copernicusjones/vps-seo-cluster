@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Can You Run a Bitcoin Node on a Cheap VPS in 2026? Yes, Here's How</title>
+<meta name="description" content="Run a Bitcoin full node or a Lightning node on a cheap VPS. Real hardware needs, pruned node setup, and why a $5 box works for most use cases.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>Bitcoin Node on a Cheap VPS (2026)</h1>
+<p>Full node, pruned node, Lightning — what a $5–10 box can actually do.</p></header>
+<article>
+<p><strong>Bottom line:</strong> a <strong>pruned Bitcoin full node runs comfortably on a 2 vCPU / 4 GB VPS with ~10 GB disk</strong>, and a Lightning node on top is feasible. A full unpruned node (600+ GB) is out of budget-VPS reach on storage, but pruned is the smart default for most hobby setups anyway.</p>
+
+<div class="note"><p><strong>Reality check:</strong> a VPS Bitcoin node is <em>centralized-ish</em> — you're renting someone else's hardware. For self-sovereignty that matters, run your own iron. For <strong>privacy, API access, and routing your own Lightning channels</strong>, a VPS is fine.</p></div>
+
+<h2>What each node type needs</h2>
+<table>
+<tr><th>Node</th><th>RAM</th><th>Disk</th><th>Best on VPS?</th></tr>
+<tr><td>Pruned full node</td><td>4 GB</td><td>~10 GB</td><td>✅ Yes</td></tr>
+<tr><td>Full unpruned node</td><td>4 GB</td><td>~600 GB</td><td>⚠️ Storage gets pricey</td></tr>
+<tr><td>Lightning node</td><td>2–4 GB</td><td>10–20 GB</td><td>✅ Yes</td></tr>
+</table>
+<p>A 4 GB VPS is the sweet spot — that's why the <a href="how-much-ram.html">how much RAM guide</a> points mid-tier boxes at exactly these workloads.</p>
+
+<h2>Quick start: pruned node on a VPS</h2>
+<pre><code># on a 4 GB VPS
+# install bitcoind, then run with pruning
+bitcoind -prune=550 -datadir=/var/lib/bitcoin -daemon
+# Lightning (if you want channels)
+# install LND or Core Lightning, connect to your bitcoind</code></pre>
+<p>Set up your SSH + firewall first — the <a href="vps-security-checklist.html">VPS security checklist</a> covers exactly the base you need before a node faces the internet.</p>
+
+<h2>Keep it cheap and predictable</h2>
+<ul>
+<li>Use <a href="uptime-kuma-cheap-vps.html">Uptime Kuma</a> to watch your node's RPC/API stays up.</li>
+<li>Schedule <a href="self-host-automation-5-vps.html">self-hosted automation</a> for channels and rebalancing.</li>
+<li>Pick a provider with real bandwidth — budget hosts that throttle hurt node sync. <a href="provider-comparison.html">Compare providers</a>.</li>
+</ul>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Spin up a Bitcoin-node VPS →</a></p>
+<p class="aff">Affiliate disclosure: we earn a commission on Vultr signups at no cost to you.</p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="how-much-ram.html">How much RAM</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · © 2026</footer>
+</body></html>
