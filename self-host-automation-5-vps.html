@@ -1,51 +1,104 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Self-Hosting Automation Tools on a $5 VPS (n8n, Uptime Kuma, More)</title>
-<meta name="description" content="Run n8n, Uptime Kuma, and your own automation stack on a $5 VPS — with backup and security that actually protects your data.">
-<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:46rem;margin:0 auto;padding:2rem 1.5rem;line-height:1.65;color:#111}
-pre{background:#f4f6f8;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+<title>Best VPS for n8n in 2026: What Specs Actually Matter</title>
+<meta name="description" content="Pick the right VPS to self-host n8n workflows in 2026. RAM, CPU, provider picks, and a Docker Compose setup that actually works — without paying for power you don't need.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}pre{background:#f4f6f8;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
 code{background:#f0f3f6;padding:.1em .3em;border-radius:4px}
 .cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
-.aff{font-size:.8rem;color:#888}footer{color:#777;font-size:.85rem;padding:2rem 0;text-align:center}</style></head><body>
-<h1>Self-Hosting Automation Tools on a $5 VPS</h1>
-<p>You don't need a big cloud bill to run your own automation stack. Here's how to run <strong>n8n</strong> (workflow automation), <strong>Uptime Kuma</strong> (monitoring), and a couple of side tools on a single cheap VPS.</p>
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}.note p{margin:.3rem 0}</style></head><body>
+<header><h1>Best VPS for n8n in 2026: Specs, Providers, and a Setup That Just Works</h1>
+<p>n8n doesn't need a big box — but it does need enough RAM and a host that doesn't oversell its nodes. Here's how to pick, and how to deploy.</p></header>
+<article>
 
-<h2>Why self-host instead of free tiers</h2>
-<p>Free SaaS tiers come with limits and, often, data residency you don't control. A $5 VPS gives you full control, no per-run costs, and the tools you already know. For anyone automating real workflows, the independence beats the sticker price of a free plan.</p>
+<p><strong>Short version:</strong> a <strong>1–2 GB</strong> VPS runs n8n comfortably for personal workflows; go to <strong>2 GB or 4 GB</strong> if you're running queues, longer workflows, or heavy integrations alongside it. Pick a provider that gives you <em>honest</em> RAM and CPU — not the cheapest sticker price on an oversold node.</p>
 
-<h2>The stack</h2>
-<pre>n8n          -> workflow automation
-Uptime Kuma  -> uptime monitoring + status page
-Caddy        -> automatic HTTPS reverse proxy
-Docker       -> runs everything</pre>
+<h2>What n8n actually needs</h2>
+<p>n8n is a Node.js app running inside Docker. A single worker doing a few hundred executions a day is light. What eats RAM is the workflow runtime, the database (SQLite by default, Postgres for production), and any heavy community nodes. Rule of thumb:</p>
+<table><tr><th>Use case</th><th>RAM</th><th>CPU</th></tr>
+<tr><td>Personal automation, a few workflows</td><td>1–2 GB</td><td>1 vCPU</td></tr>
+<tr><td>Scheduled jobs + webhooks + a few integrations</td><td>2 GB</td><td>2 vCPU</td></tr>
+<tr><td>Queue mode, many workflows, production uptime</td><td>4 GB</td><td>2 vCPU</td></tr></table>
+<p>Most self-hosters in r/n8n run comfortably on 2 GB. Don't over-buy: n8n scales down, and a 1 GB box is genuinely enough to start.</p>
 
-<h2>Quickstart (Docker Compose)</h2>
+<h2>What matters in a host (for n8n)</h2>
+<ul>
+<li><strong>Honest RAM, not oversold nodes.</strong> The #1 pain on budget VPSes is a neighbor hogging your CPU. A host that guarantees resources beats a cheaper one that shares them.</li>
+<li><strong>NVMe storage.</strong> The workflow DB and logs are small, but slow disk shows up as slow webhook responses.</li>
+<li><strong>Good uptime + fast restore.</strong> You'll snapshot before every n8n upgrade. A provider with quick snapshot restore is worth paying for.</li>
+<li><strong>Signup that doesn't fight you.</strong> Some budget hosts make new accounts painful. If the signup is a wall, the support will be too.</li>
+</ul>
+
+<h2>Best providers for n8n in 2026</h2>
+<div class="card"><strong>Hetzner Cloud CX22 (2 GB / 2 vCPU, ~$4.29/mo).</strong> The specs-per-dollar leader, and n8n runs comfortably here. NVMe-backed, no phone support, and signup can be fussier for some regions. We don't earn on this link — Hetzner closed its referral program — it's just the best value we found.<br>
+<a class="cta" href="https://www.hetzner.com/cloud" target="_blank" rel="noopener">Check Hetzner pricing →</a></div>
+
+<div class="card"><strong>Vultr (from $6/mo, 1 GB).</strong> Rock-solid uptime, global regions, and fast snapshot restore. One of the easiest hosts to deploy an n8n stack on and forget about.<br>
+<a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Deploy n8n on Vultr →</a><br>
+<span class="aff">Affiliate disclosure: if you sign up through this link we may earn a commission. It doesn't change our recommendation.</span></div>
+
+<div class="card"><strong>DigitalOcean (from $4/mo, 512 MB; $6/mo, 1 GB).</strong> The n8n 1-Click App on the Marketplace makes this the easiest path for beginners, and DO's docs are excellent. For n8n specifically, use the 2 GB droplet ($12/mo) so the app + SQLite have headroom.<br>
+<a class="cta" href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">Get $25 credit on DigitalOcean →</a><br>
+<span class="aff">Affiliate disclosure: if you sign up through this link we may earn a commission. It doesn't change our recommendation.</span></div>
+
+<div class="card"><strong>RackNerd (from $1.5/mo, 1 GB).</strong> The cheapest way to run n8n for a hobby. Read the fine print — budget hosts are likelier to oversell nodes, so keep anything you depend on off the bottom tier. Fine for playing around.<br>
+<span class="aff">Affiliate disclosure: if you sign up through this link we may earn a commission. It doesn't change our ranking.</span></div>
+
+<h2>Docker Compose setup that just works</h2>
+<p>This is the setup I run — Caddy in front for automatic HTTPS, n8n bound to localhost only, and SQLite. Expose nothing to the internet directly except port 80/443 through the proxy.</p>
 <pre><code>services:
   n8n:
     image: n8nio/n8n
-    ports: ["127.0.0.1:5678:5678"]
-    volumes: ["./n8n:/home/node/.n8n"]
     restart: unless-stopped
-  uptime-kuma:
-    image: louislam/uptime-kuma
-    ports: ["127.0.0.1:3001:3001"]
-    volumes: ["./kuma:/app/data"]
-    restart: unless-stopped</code></pre>
-<p>Expose both through Caddy for HTTPS instead of binding them to the internet directly.</p>
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=CHANGE_ME
+      - N8N_HOST=n8n.yourdomain.com
+      - N8N_PROTOCOL=https
+      - N8N_PORT=5678
+    ports:
+      - "127.0.0.1:5678:5678"
+    volumes:
+      - ./n8n:/home/node/.n8n
 
-<h2>Don't skip the backup</h2>
-<p>Your automation is data. Back up the <code>./n8n</code> and <code>./kuma</code> folders daily — <code>rsync</code> to another box or an object store. Restore from snapshot is your recovery plan. A $5 VPS with a cron backup is more resilient than most free-tier setups.</p>
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    depends_on:
+      - n8n</code></pre>
+<p><strong>Caddyfile:</strong></p>
+<pre><code>n8n.yourdomain.com {
+    reverse_proxy n8n:5678
+}</code></pre>
+<p>That's it — Caddy issues the TLS cert automatically on first boot, and n8n is reachable only at your domain over HTTPS.</p>
 
-<h2>Security for a personal box</h2>
-<ul>
-<li>Disable root password login; use SSH keys.</li>
-<li>Firewall to only 22/80/443.</li>
-<li>Put reverse proxy in front of tools (never expose the app port).</li>
-<li>Daily unattended-upgrades for patches.</li>
-</ul>
+<h2>The setup steps in one pass</h2>
+<ol>
+<li>Create the VPS (2 GB recommended) with Docker preinstalled or install it.</li>
+<li>Put the <code>compose.yaml</code> above in a folder, set your domain + password.</li>
+<li><code>docker compose up -d</code>, point your DNS A record at the box.</li>
+<li>Enable backups: snapshot daily via your provider's API, or <code>rsync ./n8n</code> off-box nightly.</li>
+</ol>
+<p>Your <code>./n8n</code> folder holds all your workflows and credentials. Back it up daily — restore-from-snapshot is your recovery plan. n8n has no cloud lock-in; the whole point of self-hosting is that the data and the workflows are yours.</p>
 
-<p>Want the hardware? A 1–2 GB box from the <a href="index.html">cheap VPS comparison</a> runs this entire stack comfortably.</p>
-<p><a class="cta" href="index.html">Pick a VPS for this →</a></p>
-<p class="aff">If you buy through this link, we may earn a commission.</p>
+<h2>Don't overthink the box</h2>
+<p>n8n self-hosting is the single best value in the automation space right now. The pitfall most people hit isn't the software — it's signing up with a host that oversells RAM and then wondering why the workflow runner crawls. A <a href="index.html">straight-spec cheap VPS</a> avoids that entirely.</p>
+
+<p><a class="cta" href="index.html">See the full cheap VPS comparison →</a></p>
+<p class="aff">If you buy through a sponsored link on this page, we may earn a commission. It never changes what we recommend.</p>
+</article>
+<footer>Related: <a href="index.html">Cheap VPS comparison</a> · <a href="vps-vs-shared.html">VPS vs shared hosting</a> · <a href="how-much-ram.html">How much RAM you need</a> · <a href="red-flags-unlimited-hosts.html">Unlimited-host red flags</a> · © 2026</footer>
 </body></html>
