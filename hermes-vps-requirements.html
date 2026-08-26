@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hermes VPS Requirements & Benchmark Methodology (2026)</title>
+<meta name="description" content="What a VPS actually needs to self-host Hermes and automation agents, and how we measure it — with honest, reproducible numbers. No invented benchmarks.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;margin-right:.4rem}
+.badge.untested{background:#fef3c7;color:#92400e}.badge.tested{background:#dcfce7;color:#166534}</style></head><body>
+<header><h1>Hermes VPS Requirements &amp; Benchmark Methodology</h1>
+<p>The honest way to size a VPS for self-hosted automation — how we measure, what actually matters, and no invented numbers.</p></header>
+<article>
+<p><strong>Bottom line:</strong> we're building a <em>reproducible</em> benchmark for running Hermes (and n8n, Uptime Kuma, and similar self-hosted automation) on a VPS. This page is the methodology. It does <strong>not</strong> list fabricated provider scores — only genuinely tested providers will ever appear below, each with a linked raw result file.</p>
+
+<div class="note"><p><strong>Why the honesty matters:</strong> most "VPS benchmark" articles invent uptime and throughput figures to push affiliate links. We don't. Every number we publish has a reproducible command behind it, and a provider is only marked <span class="badge tested">TESTED</span> if we actually ran the harness on a live box — at $0 cost, using only existing free credits. Anything else is labeled <span class="badge untested">UNTESTED / ESTIMATED</span> and kept clearly separate.</p></div>
+
+<h2>What actually matters for a Hermes box</h2>
+<p>Self-hosted agent stacks are not like a simple WordPress blog. They stay resident (a gateway holds an in-memory session + tool runtime), they do bursts of CPU work during thinking/compaction, and they hold RAM for the session history. The three things that matter most:</p>
+<table><tr><th>Resource</th><th>Why it matters</th><th>Rough floor (estimate)</th></tr>
+<tr><td>CPU cores</td><td>agent reasoning, compaction, concurrent tool calls</td><td>2 vCPU comfortable; 1 vCPU is workable for a single user</td></tr>
+<tr><td>RAM</td><td>session history, Node runtime, Docker (n8n), caching</td><td>2 GB minimum for Hermes + n8n; 4 GB comfortable</td></tr>
+<tr><td>Disk</td><td>SSD-backed for compactions + Docker images</td><td>NVMe strongly preferred over spinning disk</td></tr></table>
+<p class="aff">These are engineering estimates from how agent runtimes behave, not measured benchmark claims. Verified results will be added below as providers get tested for $0.</p>
+
+<h2>How we measure (the harness)</h2>
+<p>We measure with a portable, zero-cost, reproducible script set. The same harness runs on any Linux box — it needs no paid account and no special agent. The probes:</p>
+<div class="card"><strong>01 · System facts</strong> — OS, arch, CPU model + cores, total RAM, disk availability, virtualization. An oversold 1-core box will not hold a live agent gateway, and this shows it.</div>
+<div class="card"><strong>02 · CPU &amp; memory probe</strong> — single-thread CPU loop plus memory write/read bandwidth. This reflects agent thinking and compaction load.</div>
+<div class="card"><strong>03 · Hermes-stack probe</strong> — Docker, Node, Python availability and container count. Most self-host stacks (Hermes, n8n, Kuma) run in containers.</div>
+<p><a class="cta" href="https://github.com/copernicusjones/hermes-vps-benchmark" target="_blank" rel="noopener">Get the benchmark harness on GitHub →</a></p>
+
+<h2>Tested providers</h2>
+<p>None yet. The methodology page only gains a provider row after the harness actually runs on that provider's box using $0 existing credit, with the raw JSON result linked and the box destroyed afterward at $0 balance. When we have real numbers, they go here — and nowhere else.</p>
+
+<div class="card" style="border-color:#fef3c7;background:#fffbeb"><strong><span class="badge untested">UNTESTED</span>Current status:</strong> we are setting up the first $0 test canary (DigitalOcean existing credit, verified zero billable balance before and after). Results will appear here only if the run is genuinely free.</div>
+
+<h2>Full requirements reference</h2>
+<p>New to VPS sizing? See <a href="how-much-ram.html">How much RAM does your VPS actually need</a> and <a href="vps-vs-shared.html">VPS vs shared hosting</a>. For self-hosting n8n specifically, see <a href="self-host-automation-5-vps.html">Best VPS for n8n 2026</a>.</p>
+<p class="aff">Affiliate disclosure: where a recommendation links to a VPS provider, signing up through the link may earn us a commission. It never affects whether a provider gets a "tested" badge — those are earned by the harness only.</p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS 2026</a> · <a href="self-host-automation-5-vps.html">n8n VPS guide</a> · <a href="how-much-ram.html">RAM sizing</a> · © 2026</footer>
+</body></html>
