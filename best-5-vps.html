@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Best $5 VPS in 2026: What You Actually Get for Your Money</title>
+<meta name="description" content="What a $5 VPS actually buys in 2026: RAM, CPU, and what workloads fit a $5 box. Honest provider-by-provider breakdown with real specs, not marketing numbers.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}</style></head><body>
+<div class="header"><h1>Best $5 VPS in 2026: What You Actually Get</h1>
+<p>A $5 budget is the sweet spot for a first server. Here's exactly what it buys you and where it stops.</p></div>
+<article>
+
+<p><strong>Bottom line:</strong> a $5-ish VPS in 2026 reliably gets you <strong>1 GB of RAM, 1 vCPU, and 20–30 GB of NVMe storage</strong> — enough for one or two real services like <a href="self-host-automation-5-vps.html">n8n</a>, <a href="uptime-kuma-cheap-vps.html">Uptime Kuma</a>, a personal <a href="docker-on-vps-starter.html">Docker stack</a>, or a low-traffic site. It is <em>not</em> enough to run Plex transcoding, a big database, or multiple heavy apps at once. If you know that boundary, a $5 box is the best first-server value there is.</p>
+
+<h2>The $5 baseline (provider-reported)</h2>
+<table><tr><th>Provider</th><th>Starting price</th><th>RAM</th><th>vCPU</th><th>Storage</th></tr>
+<tr><td>RackNerd</td><td>$1.5/mo</td><td>1 GB</td><td>1</td><td>~20 GB</td></tr>
+<tr><td>Vultr</td><td>$6/mo</td><td>1 GB</td><td>1</td><td>25 GB</td></tr>
+<tr><td>DigitalOcean</td><td>$6/mo</td><td>1 GB</td><td>1</td><td>25 GB</td></tr>
+<tr><td>Contabo</td><td>$5.5/mo</td><td>4 GB</td><td>2</td><td>50 GB</td></tr></table>
+<p class="aff">Specs are provider-reported from public pricing pages (Aug 2026) and labeled as such — we don't invent benchmark numbers. See our <a href="hermes-vps-requirements.html">benchmark methodology</a> for how we treat untested data.</p>
+
+<h2>What fits comfortably in 1 GB of RAM</h2>
+<ul>
+<li><strong>One low-traffic website</strong> (nginx + a static site or PHP-FPM for a small CMS)</li>
+<li><strong>n8n</strong> for automation — runs fine in ~300–500 MB for modest workflows</li>
+<li><strong>Uptime Kuma</strong> — idles around 100–150 MB with dozens of monitors</li>
+<li><strong>A reverse proxy</strong> (Caddy or nginx) in front of other boxes</li>
+<li><strong>One Docker container</strong> at a time, comfortably</li>
+</ul>
+<p>See our <a href="how-much-ram.html">RAM sizing guide</a> for the full workload table and the thresholds where 1 GB stops being enough.</p>
+
+<h2>Where $5 stops being enough</h2>
+<ul>
+<li><strong>Plex or Jellyfin</strong> — media transcoding needs CPU and RAM a $5 box doesn't have. See <a href="plex-vps.html">whether a VPS makes sense for Plex at all</a>.</li>
+<li><strong>Multiple heavy apps at once</strong> — two Dockerized apps with their own DBs will blow 1 GB fast.</li>
+<li><strong>A serious database</strong> (Postgres under real load). Budget a 2 GB box at minimum.</li>
+<li><strong>Local AI agents</strong> — a 1 GB box can't run a meaningful local model. That belongs on a bigger box or a <a href="ai-agent-vps.html">dedicated agent host</a>.</li>
+</ul>
+
+<h2>The smart $5 buy</h2>
+<div class="card"><strong>Best $5 pick for a first box:</strong> a <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a> 1 GB plan. Both are transparent about specs, have solid docs, and are easy to resize when you outgrow them.<span class="aff"> Affiliate disclosure: signups through these links may earn us a commission.</span></div>
+<div class="card"><strong>Cheapest possible:</strong> <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a> at $1.5/mo — fine for a throwaway test or a reverse proxy, but budget hosts oversell nodes, so don't put anything you depend on there.<span class="aff"> Affiliate disclosure: signups through this link may earn us a commission. It doesn't change our ranking.</span></div>
+<div class="card"><strong>Most RAM for the price:</strong> <a href="https://www.contabo.com" target="_blank" rel="noopener">Contabo</a>'s 4 GB for ~$5.5 — the outlier. Tempting on specs, but support and network quality are a known tradeoff.</div>
+
+<p>Want the full picture first? Start with our <a href="index.html">best cheap VPS hosting guide</a> for the complete provider comparison, then <a href="vps-security-checklist.html">lock down your new box</a>.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Get a $6 Vultr box →</a></p>
+
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="vps-vs-shared.html">VPS vs shared hosting</a> · <a href="how-much-ram.html">How much RAM</a> · <a href="provider-comparison.html">DigitalOcean vs Vultr vs RackNerd</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · © 2026</footer>
+</body></html>

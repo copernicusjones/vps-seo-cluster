@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home Assistant on a VPS: Is a Cloud Server Actually the Right Move in 2026?</title>
+<meta name="description" content="Run Home Assistant on a VPS vs a local box in 2026. The honest tradeoffs — remote access, integrations, hardware requirements — and the VPS specs that fit.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>Home Assistant on a VPS (2026)</h1>
+<p>Can Home Assistant run on a cheap VPS, or should it live on hardware in your home? The honest split.</p></header>
+<article>
+<p><strong>Bottom line:</strong> yes, Home Assistant runs fine on a <strong>2 GB VPS</strong> — <em>if</em> your devices are cloud-connected or reachable over the internet. The catch: most smart-home gear (Zigbee, Z-Wave, local LAN devices) needs a <strong>USB dongle or local network</strong>, which a VPS can't give you. If you use cloud-based devices and want HA as a remote controller, a VPS is a great fit. If you have local radios, keep HA on a box at home.</p>
+
+<div class="note"><p><strong>The hardware split:</strong><br>
+<strong>VPS works when:</strong> your devices are Wi-Fi / cloud / LAN-reachable, you want always-on remote access, and you don't need a Zigbee/Z-Wave USB dongle.<br>
+<strong>Local box wins when:</strong> you need a USB dongle for Zigbee/Z-Wave/Thread, or you want everything to work when your internet goes down.</p></div>
+
+<h2>When a VPS makes sense</h2>
+<ul>
+<li>You use <strong>cloud or IP-based devices</strong> (many Wi-Fi bulbs, plugs, Tuya, ESPHome over IP).</li>
+<li>You want <strong>always-on remote access</strong> from your phone anywhere without a VPN tunnel home.</li>
+<li>You're comfortable with <strong>tailscale or a reverse proxy</strong> to reach it securely.</li>
+<li>You want <strong>no hardware on your desk</strong> — everything in one cloud box.</li>
+</ul>
+
+<h2>The honest tradeoff</h2>
+<p>The biggest gotcha: Home Assistant's most valuable integrations (local Zigbee/Z-Wave hubs, USB radios) <strong>cannot work on a VPS</strong> — there's no USB passthrough to a dongle you don't own. If your home is built around those, a VPS for HA is a trap. A good middle path: run HA at home and use a VPS as the always-on reverse proxy / remote entry point, which is often the better architecture anyway.</p>
+
+<h2>Specs for HA on a VPS</h2>
+<table><tr><th>Setup</th><th>RAM</th><th>vCPU</th></tr>
+<tr><td>HAOS, a few integrations</td><td>2 GB</td><td>1–2</td></tr>
+<tr><td>HA + lots of integrations / media</td><td>4 GB</td><td>2</td></tr></table>
+<p class="aff">Provider-reported; see our <a href="hermes-vps-requirements.html">methodology</a> on how we treat untested data.</p>
+
+<div class="card"><strong>If you run HA (or HA as remote access) on a VPS:</strong> <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a> — reliable, easy resize when HA grows. Budget? <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a>.<span class="aff"> Affiliate disclosure: signups through these links may earn us a commission.</span></div>
+
+<p>Run anything else on that box? Combine HA with <a href="n8n-vps-setup.html">n8n</a>, <a href="uptime-kuma-cheap-vps.html">Uptime Kuma</a>, or your <a href="docker-on-vps-starter.html">Docker stack</a> — and read the <a href="how-much-ram.html">RAM sizing guide</a> before you oversubscribe it.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Get a Home Assistant VPS →</a></p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="how-much-ram.html">How much RAM</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · © 2026</footer>
+</body></html>

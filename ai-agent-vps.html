@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Best VPS for Self-Hosted AI Agents (OpenClaw, Hermes, n8n) in 2026</title>
+<meta name="description" content="The real VPS specs you need to run AI agents like OpenClaw and Hermes in 2026 — and the honest truth about why a cheap 1 GB box usually isn't enough.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>Best VPS for Self-Hosted AI Agents (2026)</h1>
+<p>Can you run an AI agent on a cheap VPS? The honest answer, and the specs that actually matter for OpenClaw, Hermes, n8n, and friends.</p></header>
+<article>
+<p><strong>Bottom line:</strong> if you want to run an <strong>AI agent loop</strong> — something like OpenClaw, Hermes, or an n8n workflow that calls an LLM — the <em>agent runtime</em> is light, but you should not plan to run a <strong>local model</strong> on a budget VPS. A 2 GB box runs the agent software fine; running the model itself needs a GPU box or a cloud API. Know which one you're actually building.</p>
+
+<div class="note"><p><strong>The two different questions:</strong><br>
+<strong>1) Run the agent (the runtime):</strong> cheap — 1–2 GB RAM handles it. The agent calls out to an LLM API.<br>
+<strong>2) Run the model (the brain):</strong> expensive — needs a GPU. Not what a $5 VPS is for.</p></div>
+
+<h2>What an agent runtime actually needs</h2>
+<p>OpenClaw, Hermes, and similar agent frameworks are mostly an event loop, tool calls, and some memory. They're not GPU-bound. What they need:</p>
+<ul>
+<li><strong>RAM:</strong> 1 GB runs a modest agent; 2 GB is comfortable with room for Docker and a small DB.</li>
+<li><strong>CPU:</strong> one vCPU is enough for light agent work; more helps when workflows chain many steps.</li>
+<li><strong>Disk:</strong> NVMe matters for the agent's memory/state writes and logs.</li>
+<li><strong>Network:</strong> solid outbound to the LLM API. Keep the box near where the API is.</li>
+</ul>
+
+<h2>Realistic pick for an agent box</h2>
+<table><tr><th>Use case</th><th>RAM</th><th>vCPU</th><th>Approx /mo</th></tr>
+<tr><td>Light agent, one at a time</td><td>1–2 GB</td><td>1</td><td>$5–12</td></tr>
+<tr><td>Several agents / heavy workflows</td><td>4 GB</td><td>2</td><td>~$15–25</td></tr>
+<tr><td>Local model (LLaMA etc.)</td><td>16 GB+ / GPU</td><td>4+</td><td>$50+</td></tr></table>
+<p class="aff">Specs are provider-reported; we don't publish fabricated benchmark numbers. See our <a href="hermes-vps-requirements.html">Hermes VPS requirements &amp; methodology</a>.</p>
+
+<div class="card"><strong>Good agent boxes:</strong> <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a> (reliable, NVMe, easy resize). For a cheap throwaway agent, <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a> works.<span class="aff"> Affiliate disclosure: signups through these links may earn us a commission.</span></div>
+
+<p>New to the whole idea? Read <a href="vps-vs-shared.html">when a VPS beats shared hosting</a>, and see our <a href="hermes-vps-requirements.html">full Hermes VPS requirements page</a> for exactly what the Hermes agent stack needs.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Get an agent-ready VPS →</a></p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="hermes-vps-requirements.html">Hermes VPS requirements &amp; benchmarks</a> · <a href="n8n-vps-setup.html">n8n on a VPS</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="how-much-ram.html">How much RAM</a> · © 2026</footer>
+</body></html>

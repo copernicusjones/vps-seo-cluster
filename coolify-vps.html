@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coolify on a Cheap VPS: Self-Hosted Deploys for Pennies in 2026</title>
+<meta name="description" content="Run Coolify, the open-source Heroku alternative, on a budget VPS in 2026. VPS specs, Docker install, and whether it beats a PaaS for your projects.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>Coolify on a Cheap VPS (2026)</h1>
+<p>Coolify is the open-source self-hosted PaaS. Here's how much VPS you actually need to run it and whether it's worth it vs a PaaS.</p></header>
+<article>
+<p><strong>Bottom line:</strong> Coolify is light enough that a <strong>2 GB VPS</strong> runs it well for a handful of apps. It's a genuinely great fit if you want Heroku-like deploys (Git push → live) without paying per-app pricing. You provide the VPS, Coolify handles the rest.</p>
+
+<div class="note"><p><strong>Spec guidance:</strong> Coolify itself is a small control plane. The RAM you really need depends on how many apps you deploy and what they are. 2 GB for a personal setup; go to 4 GB if you're running several services.</p></div>
+
+<h2>Why people run Coolify on a VPS</h2>
+<ul>
+<li><strong>Git-based deploys:</strong> connect a repo, push, and it builds and deploys — no Docker files hand-rolled per app.</li>
+<li><strong>Database, reverse proxy, SSL handled</strong> — Caddy does TLS automatically.</li>
+<li><strong>You keep the box:</strong> all data on your VPS, no per-app or per-dyno pricing.</li>
+</ul>
+
+<h2>The install</h2>
+<p>Coolify installs from a single command on a fresh Ubuntu VPS with Docker:</p>
+<pre><code>curl -sSL https://coolify.io/install | bash</code></pre>
+<p>That sets up Docker, pulls Coolify, and starts the panel. You then point your DNS at the VPS, add a domain in the panel, and Coolify provisions HTTPS.</p>
+
+<h2>What it compares to</h2>
+<table><tr><th>Option</th><th>Cost</th><th>Tradeoff</th></tr>
+<tr><td>PaaS (Heroku, Render, Railway)</td><td>Pay per app/dyno</td><td>No infra work, but adds up fast</td></tr>
+<tr><td>Coolify on your own VPS</td><td>VPS + $0</td><td>You maintain the box</td></tr>
+<tr><td>Manual Docker on VPS</td><td>VPS</td><td>You write compose files yourself</td></tr></table>
+
+<div class="card"><strong>Good Coolify boxes:</strong> <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a> (NVMe, easy resize). Budget? <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a>.<span class="aff"> Affiliate disclosure: signups through these links may earn us a commission.</span></div>
+
+<p>New to Docker entirely? Start with our <a href="docker-on-vps-starter.html">Docker starter stack</a>, then lock it down with the <a href="vps-security-checklist.html">security checklist</a>.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Get a Coolify-ready VPS →</a></p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · <a href="how-much-ram.html">How much RAM</a> · <a href="n8n-vps-setup.html">n8n on a VPS</a> · © 2026</footer>
+</body></html>

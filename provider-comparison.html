@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DigitalOcean vs Vultr vs RackNerd: Which Budget VPS Wins in 2026?</title>
+<meta name="description" content="DigitalOcean, Vultr, and RackNerd compared for 2026: pricing, specs, support, and which one to pick for n8n, Uptime Kuma, and Docker. Honest head-to-head.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}</style></head><body>
+<header><h1>DigitalOcean vs Vultr vs RackNerd (2026)</h1>
+<p>The three budget VPS names you actually hear about, compared on the things that matter when you self-host.</p></header>
+<article>
+<p><strong>Bottom line:</strong> if you want the easiest, most reliable first box with good docs, pick <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a>. If you want the absolute lowest price and can tolerate rough edges, pick <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a>.<span class="aff"> Affiliate disclosure: signups through these links may earn us a commission.</span></p>
+
+<div class="note"><p><strong>How we judge:</strong> published specs, pricing transparency, support quality, ecosystem (docs/marketplace), and real-world reputation. Specs are provider-reported, not fabricated benchmark results — see our <a href="hermes-vps-requirements.html">methodology</a>.</p></div>
+
+<h2>Head to head</h2>
+<table><tr><th>Provider</th><th>Starting price</th><th>RAM</th><th>vCPU</th><th>Storage</th><th>Support</th><th>Regions</th></tr>
+<tr><td>Vultr</td><td>$6/mo</td><td>1 GB</td><td>1</td><td>25 GB</td><td>Good, global</td><td>32+</td></tr>
+<tr><td>DigitalOcean</td><td>$6/mo</td><td>1 GB</td><td>1</td><td>25 GB</td><td>Good, docs-heavy</td><td>15+</td></tr>
+<tr><td>RackNerd</td><td>$1.5/mo</td><td>1 GB</td><td>1</td><td>~20 GB</td><td>Ticket-based, varies</td><td>Many</td></tr></table>
+<p class="aff">Specs are provider-reported from public pricing pages (Aug 2026). We don't invent numbers.</p>
+
+<h2>Vultr — the balanced pick</h2>
+<p>Vultr gives you a very large region network, predictable pricing, and a clean API. It's a strong default for most people and pairs well with the <a href="docker-on-vps-starter.html">Docker stack</a> most self-hosters run. Best for: a dependable all-rounder you can grow with.</p>
+
+<h2>DigitalOcean — the docs &amp; ecosystem pick</h2>
+<p>DigitalOcean's tutorials, marketplace, and community are the best in the budget tier. If you're new to VPS admin and want the path of least resistance to <a href="self-host-automation-5-vps.html">self-hosting</a>, DO is the friendliest on-ramp. Best for: beginners and anyone who lives off documentation.</p>
+
+<h2>RackNerd — the price pick (with caveats)</h2>
+<p>RackNerd undercuts everyone on raw price — the $1.5/mo entry is the cheapest real VPS you'll find. The honest tradeoff: budget hosts are more likely to oversell nodes, support is a ticket queue, and you get what you pay for. Best for: throwaway tests, a cheap reverse proxy, or a low-stakes side project you won't cry over. Don't run anything you depend on there.</p>
+
+<h2>Which one should you buy?</h2>
+<div class="card"><strong>First VPS / self-hosting n8n or automation →</strong> <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a>. Pick Vultr if regions matter to you, DO if tutorials matter more.</div>
+<div class="card"><strong>Rock-bottom price →</strong> <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a>. Just read the fine print on overselling.</div>
+<div class="card"><strong>You're running a 2+ GB workload →</strong> step up to a 2 GB plan on Vultr or DO rather than stacking $1.50 boxes; see our <a href="how-much-ram.html">RAM sizing guide</a>.</div>
+
+<p>Not sure a VPS is even right for you yet? Read <a href="vps-vs-shared.html">VPS vs shared hosting</a> first. Then <a href="vps-security-checklist.html">secure your box</a> before you put anything on it.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Start with Vultr →</a></p>
+
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="best-5-vps.html">Best $5 VPS</a> · <a href="how-much-ram.html">How much RAM</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="hermes-vps-requirements.html">Hermes VPS requirements &amp; benchmarks</a> · © 2026</footer>
+</body></html>

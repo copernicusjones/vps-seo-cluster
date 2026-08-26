@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Can You Run Plex on a Cheap VPS in 2026? The Honest Answer</title>
+<meta name="description" content="Plex on a VPS: what actually works, what doesn't, and why a cheap server is usually the wrong tool for media transcoding. Honest guidance for 2026.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}
+</style></head><body>
+<header><h1>Plex on a VPS (2026)</h1>
+<p>Everyone asks if a cheap VPS can host Plex. The honest answer is usually "no, and here's why."</p></header>
+<article>
+<p><strong>Bottom line:</strong> a <strong>cheap 1–2 GB VPS is the wrong place for a Plex media server</strong>. Plex's whole job — transcoding video for multiple clients — needs a CPU with Quick Sync or a GPU, plus fast storage for your library. That's the opposite of a $5 box. Where a VPS <em>can</em> help is a <strong>Plex relay / remote-access entry point</strong>, but you don't need one if you set up port forwarding properly.</p>
+
+<div class="note"><p><strong>Skip the cheap VPS for Plex if you:</strong><br>
+- want to transcode 4K or share with multiple users → needs GPU/CPU grunt<br>
+- have a large media library → needs big fast storage (VPS NVMe is tiny and pricey)<br>
+- care about upload speeds to viewers → a shared budget VPS may throttle</p></div>
+
+<h2>When Plex DOES work on a VPS</h2>
+<ul>
+<li><strong>You direct-play</strong> already-transcoded files (no on-the-fly transcoding) — then a 2–4 GB box works for a handful of viewers.</li>
+<li><strong>You only need remote access</strong> to a server that lives at home — set up a VPS as a reverse proxy / relay, not the Plex server.</li>
+<li><strong>You store media on a separate storage server</strong> and only want the Plex app layer on the VPS.</li>
+</ul>
+
+<h2>The realistic setup if you insist</h2>
+<pre><code># on a VPS with at least 4 GB RAM and NVMe
+# Docker Compose
+services:
+  plex:
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    volumes:
+      - ./plex:/config
+      - /media:/data
+    network_mode: host</code></pre>
+<p>You'd point <code>/media</code> at your own storage. A 4 GB box is the realistic floor, and you're paying for a mostly-idle server most of the time.</p>
+
+<h2>Cheaper, smarter alternatives</h2>
+<ul>
+<li>Keep Plex at home; use a VPS as a <a href="vps-security-checklist.html">hardened reverse proxy</a> for remote access (small, cheap, does the job).</li>
+<li>Use a cloud object store for library files and run Plex app where it can reach them.</li>
+<li>Use a cheap VPS for the <a href="uptime-kuma-cheap-vps.html">uptime monitoring</a> of your home server instead.</li>
+</ul>
+
+<p>If you just need a server for <a href="n8n-vps-setup.html">n8n</a>, <a href="docker-on-vps-starter.html">Docker</a>, or <a href="home-assistant-vps.html">Home Assistant</a>, a cheap VPS is perfect. For Plex itself, spend your money on storage and a real CPU, not a $5 cloud box.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Get a VPS for everything except Plex →</a></p>
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="how-much-ram.html">How much RAM</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · © 2026</footer>
+</body></html>

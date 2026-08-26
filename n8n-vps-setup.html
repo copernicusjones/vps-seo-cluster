@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>n8n on a VPS: The Cheapest Way to Self-Host Automation in 2026</title>
+<meta name="description" content="Run n8n on your own VPS for pennies a day. Full setup guide, the exact VPS specs you need, and why self-hosting beats the cloud tiers for real automation work.">
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}
+.note p{margin:.3rem 0}</style></head><body>
+<header><h1>n8n on a VPS: The Complete Setup</h1>
+<p>n8n is the automation tool people self-host because the cloud tiers get expensive fast. Here's the full route on a cheap VPS.</p></header>
+<article>
+<p><strong>Bottom line:</strong> you can run n8n production-style on a <strong>1–2 GB VPS</strong> for $5–7/mo. For anyone running more than a couple of test workflows, self-hosting n8n pays for itself almost immediately — the paid cloud plans run more per month than a year of VPS.</p>
+
+<div class="note"><p><strong>Spec note:</strong> n8n on a 1 GB box is fine for light-to-moderate workflows. If you're running many scheduled jobs, a 2 GB box gives comfortable headroom. See the <a href="how-much-ram.html">RAM sizing guide</a> for the workload thresholds.</p></div>
+
+<h2>Why self-host n8n</h2>
+<ul>
+<li><strong>Cost:</strong> a VPS is a flat few dollars a month; n8n cloud scales with executions and adds up.</li>
+<li><strong>Control:</strong> your data, your node library, your rate limits, no per-workflow pricing.</li>
+<li><strong>Run forever:</strong> a workflow that ticks every 5 minutes costs the same as one that never runs.</li>
+</ul>
+
+<h2>The 1-command Docker setup</h2>
+<p>n8n runs great in Docker. On a fresh VPS:</p>
+<pre><code># assume Docker is installed — see our Docker starter stack
+mkdir -p ~/n8n && cd ~/n8n
+docker run -d --name n8n \
+  -p 5678:5678 \
+  -v n8n_data:/home/node/.n8n \
+  -e N8N_SECURE_COOKIE=false \
+  n8nio/n8n</code></pre>
+<p>Then open <code>http://your-vps:5678</code>. That's it.</p>
+
+<h2>Put it behind HTTPS with Caddy</h2>
+<p>n8n isn't a full web server, so front it with <a href="https://github.com/copernicusjones/uptime-kuma-stack" target="_blank" rel="noopener">Caddy</a> for automatic TLS:</p>
+<pre><code>automation.yourdomain.com {
+    reverse_proxy n8n:5678
+}</code></pre>
+
+<h2>Realistic VPS needs</h2>
+<table><tr><th>Workload</th><th>RAM</th><th>Good pick</th></tr>
+<tr><td>A few hobby workflows</td><td>1 GB</td><td>$1.5–6</td></tr>
+<tr><td>Active production automation</td><td>2 GB</td><td>~$7–12</td></tr>
+<tr><td>n8n + other services (Uptime Kuma, etc.)</td><td>2 GB+</td><td>Scale up</td></tr></table>
+
+<div class="card"><strong>Recommended boxes for n8n:</strong> <a href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Vultr</a> (reliable, global) or <a href="https://m.do.co/c/38b92847aed3" target="_blank" rel="noopener sponsored">DigitalOcean</a> (great docs). Budget? <a href="https://my.racknerd.com/aff.php?aff=21029" target="_blank" rel="noopener sponsored">RackNerd</a>.<span class="aff"> Affiliate disclosure: signups through these links may earn us a commission.</span></div>
+
+<p>New to VPS hosting entirely? <a href="vps-vs-shared.html">Read when a VPS makes sense</a> and <a href="vps-security-checklist.html">lock it down first</a>.</p>
+
+<p><a class="cta" href="https://www.vultr.com/?ref=9919782" target="_blank" rel="noopener sponsored">Get an n8n-ready VPS →</a></p>
+
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="self-host-automation-5-vps.html">Self-host automation on a $5 VPS</a> · <a href="best-5-vps.html">Best $5 VPS</a> · <a href="docker-on-vps-starter.html">Docker starter stack</a> · <a href="uptime-kuma-cheap-vps.html">Uptime Kuma</a> · <a href="hermes-vps-requirements.html">Hermes VPS requirements</a> · © 2026</footer>
+</body></html>
