@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Run Docker on a Cheap VPS in 2026: Starter Stack + Free Tools</title>
+<meta name="description" content="Get Docker running on a cheap VPS and build a starter stack of free self-hosted tools (n8n, Uptime Kuma) with automatic HTTPS. Zero-cost setup, honest sizing.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#111;line-height:1.65;background:#fafafa}
+header{padding:3rem 1.5rem;text-align:center;background:#0e1116;color:#fff}
+article{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}
+h2{margin-top:2.4rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:1rem 0}th,td{border:1px solid #dde;padding:.5rem;text-align:left}
+th{background:#f0f3f6}.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{text-align:center;color:#777;font-size:.85rem;padding:2rem}
+pre{background:#0e1116;color:#e6e6e6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{background:none;color:inherit;padding:0}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px;padding:1.25rem;margin:1rem 0}</style></head><body>
+<header><h1>Run Docker on a Cheap VPS in 2026</h1>
+<p>A free starter stack of self-hosted tools on one small box.</p></header>
+<article>
+
+<p><strong>Bottom line:</strong> a cheap VPS with Docker running is the cheapest way to own your automation and monitoring — n8n for workflows, Uptime Kuma for uptime, Caddy for free HTTPS. All free software; you only pay for the box.</p>
+
+<h2>The stack at a glance</h2>
+<table>
+<tr><th>Tool</th><th>What it does</th><th>RAM</th><th>Guide</th></tr>
+<tr><td>n8n</td><td>Workflow automation (self-hosted)</td><td>~0.5 GB</td><td><a href="self-host-automation-5-vps.html">full setup</a></td></tr>
+<tr><td>Uptime Kuma</td><td>Uptime &amp; status monitoring</td><td>~0.15 GB</td><td><a href="uptime-kuma-cheap-vps.html">full setup</a></td></tr>
+<tr><td>Caddy</td><td>Reverse proxy + auto HTTPS</td><td>~0.1 GB</td><td>both guides</td></tr>
+</table>
+<p class="note">All three fit comfortably on a <a href="how-much-ram.html">2&nbsp;GB VPS</a>. A 1&nbsp;GB box works for one or two, tight for all three.</p>
+
+<h2>Install Docker</h2>
+<p>On Debian/Ubuntu, the official convenience script works and is the most-maintained path:</p>
+<pre><code>curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+newgrp docker
+docker --version</code></pre>
+<p>Then verify Compose v2 is included: <code>docker compose version</code>.</p>
+<p class="note"><strong>Security first:</strong> before exposing anything, run through the <a href="vps-security-checklist.html">15-minute VPS security checklist</a> — SSH hardening, firewall, fail2ban. Do it before you deploy.</p>
+
+<h2>The two free tools worth running</h2>
+<h3>n8n — your automation engine</h3>
+<p>n8n self-hosted gives you unlimited workflow executions and full data control. Full step-by-step in the <a href="self-host-automation-5-vps.html">Best VPS for n8n in 2026</a> guide, with a ready <a href="https://github.com/copernicusjones/cheap-vps-n8n-stack" target="_blank" rel="noopener">n8n + Caddy repo</a>.</p>
+<h3>Uptime Kuma — know when things break</h3>
+<p>Free, unlimited uptime monitors with notifications. Grab the <a href="https://github.com/copernicusjones/uptime-kuma-stack" target="_blank" rel="noopener">uptime-kuma-stack repo</a> and the <a href="uptime-kuma-cheap-vps.html">setup guide</a>.</p>
+
+<h2>Why a paid VPS over free tiers for this</h2>
+<p>Free SaaS tiers for n8n (or the automation features you actually need) tend to cap executions, hide your data behind their terms, and nag you to upgrade. A $5–$6/mo VPS with <a href="self-host-automation-5-vps.html">Docker + a few tools</a> removes those caps and keeps your data on hardware you control. For many people the box pays for itself by removing limits you'd otherwise hit.</p>
+
+<h2>Pick a box</h2>
+<div class="card"><strong>Budget starter (1&nbsp;GB):</strong> enough for one or two tools, most days. Good if you're testing.<br>
+<strong>Sweet spot (2&nbsp;GB):</strong> the choice for n8n + Uptime Kuma + a website together.<br>
+See the full <a href="index.html">cheap VPS comparison</a> to match a provider to the workload.</div>
+
+<p><a class="cta" href="index.html">Compare cheap VPS providers →</a></p>
+<p class="aff">Affiliate disclosure: signups through comparison links on this site may earn us a commission. It doesn't change our rankings.</p>
+
+</article>
+<footer>Related: <a href="index.html">Best cheap VPS hosting 2026</a> · <a href="self-host-automation-5-vps.html">Self-host n8n</a> · <a href="uptime-kuma-cheap-vps.html">Uptime Kuma</a> · <a href="vps-security-checklist.html">VPS security checklist</a> · <a href="vps-vs-shared.html">VPS vs shared hosting</a> · © 2026</footer>
+</body></html>
