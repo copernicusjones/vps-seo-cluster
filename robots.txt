@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://copernicusjones.github.io/vps-seo-cluster/sitemap.xml
