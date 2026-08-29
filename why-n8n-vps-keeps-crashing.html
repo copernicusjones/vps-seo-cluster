@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why Your n8n VPS Keeps Crashing (And the Fix That Actually Works)</title>
+<meta name="description" content="n8n crashing on your VPS? It's almost never the CPU. Here's the real cause — memory — and the exact sizing, queue-mode, and Docker fixes that stop the restarts for good.">
+<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:46rem;margin:0 auto;padding:2rem 1.5rem;line-height:1.65;color:#111}
+h2{margin-top:2.2rem}.card{border:1px solid #e3e7ec;border-radius:12px;padding:1.25rem;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #d9dde1;padding:.55rem;text-align:left}th{background:#f0f3f6}
+pre{background:#0e1116;color:#e6edf3;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.9rem}
+code{background:#f0f3f6;padding:.1rem .35rem;border-radius:4px;font-size:.9em}pre code{background:none;padding:0}
+.cta{display:inline-block;background:#2563eb;color:#fff;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:600}
+.aff{font-size:.8rem;color:#888}footer{color:#777;font-size:.85rem;padding:2rem 0;text-align:center}
+.warn{border-left:4px solid #d97706;background:#fffbeb;padding:.9rem 1.1rem;border-radius:0 8px 8px 0;margin:1rem 0}</style></head><body>
+<h1>Why Your n8n VPS Keeps Crashing (And the Fix That Actually Works)</h1>
+<p>If your n8n instance keeps dying — the container restarts, workflows drop mid-run, or the whole box freezes — the cause is almost never the CPU. It's <strong>memory</strong>. n8n holds the entire workflow payload, intermediate transformations, and queued nodes in RAM while it waits on external APIs. A faster CPU doesn't shorten that wait; more RAM is what stops the crash.</p>
+
+<h2>The real cause: n8n is memory-bound, not CPU-bound</h2>
+<p>Most n8n execution time is spent <em>waiting</em> for HTTP responses from external APIs. During that wait the CPU sits idle while the workflow data stays parked in memory. When several workflows run at once, that parked data stacks up — and on a 1 GB box it doesn't take long to hit the ceiling. The process gets OOM-killed, the container restarts, and you see the crash loop.</p>
+<p>This is why the <a href="how-much-ram.html">RAM sizing guide</a> puts n8n at <strong>2 GB minimum</strong> for real automation, not the 512 MB that "it's just a small tool" suggests.</p>
+
+<h2>Fix 1: Give it enough RAM (the sizing table)</h2>
+<table><tr><th>Workload</th><th>Recommended RAM</th><th>Notes</th></tr>
+<tr><td>n8n, light (1–3 workflows, no heavy nodes)</td><td>1–2 GB</td><td>Comfortable at 1 GB if you trim</td></tr>
+<tr><td>n8n, real automation (HTTP, DB, file nodes)</td><td>2–4 GB</td><td>The sweet spot for most people</td></tr>
+<tr><td>n8n + queue mode + Postgres</td><td>4 GB+</td><td>Queue mode needs headroom for workers</td></tr>
+<tr><td>n8n + other apps (Uptime Kuma, bots)</td><td>4 GB</td><td>Shared box — count everything</td></tr></table>
+<p>Start at 2 GB, watch real usage with <code>htop</code> for a week, and scale up only when swap starts getting hit. Most people never need more than 4 GB.</p>
+
+<h2>Fix 2: Turn on queue mode (the one that stops the crashes)</h2>
+<p>By default n8n runs in "main" mode — one process does everything, and a single heavy workflow can take the whole instance down. Queue mode splits the work: a main process handles the editor, and separate worker processes execute workflows. If one worker dies, the others keep running and the job gets retried.</p>
+<pre><code># docker-compose.yml — n8n in queue mode with Postgres
+services:
+  n8n:
+    image: n8nio/n8n
+    environment:
+      - EXECUTIONS_MODE=queue
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=change-me
+      - N8N_HOST=automation.yourdomain.com
+      - N8N_PROTOCOL=https
+    command: start
+  worker:
+    image: n8nio/n8n
+    environment:
+      - EXECUTIONS_MODE=queue
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=change-me
+    command: worker
+  postgres:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=change-me
+      - POSTGRES_DB=n8n
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+volumes:
+  pg_data:</code></pre>
+<p>Queue mode needs a database (Postgres above) and more RAM for the workers — that's the 4 GB tier. It's the difference between "crashes weekly" and "runs for months."</p>
+
+<h2>Fix 3: Watch the real numbers, not the dashboard</h2>
+<p>Don't guess. Before you buy more RAM, measure what's actually happening:</p>
+<pre><code># live memory pressure
+htop
+# container memory + restart count (the smoking gun)
+docker stats --no-stream
+docker inspect n8n --format '{{.RestartCount}} restarts'
+# swap usage — if this climbs, you're out of RAM
+free -h</code></pre>
+<p>If <code>RestartCount</code> is climbing and swap is filling, that's your confirmation: memory, not CPU. Add RAM or enable queue mode before touching anything else.</p>
+
+<h2>Fix 4: Don't expose n8n directly (security + stability)</h2>
+<p>Running n8n on a bare <code>:5678</code> port with no TLS isn't just a security risk — it invites abuse that can crash the box. Front it with Caddy for automatic HTTPS and keep port 5678 internal. See the <a href="n8n-vps-setup.html">full n8n + Caddy setup</a> for the production compose file.</p>
+
+<h2>The bottom line</h2>
+<p>n8n crashes on a VPS for one reason 90% of the time: <strong>not enough memory for the workflows you're running.</strong> Give it 2–4 GB, turn on queue mode if you're running real automation, and measure before you buy. That's the whole fix.</p>
+
+<p><a class="cta" href="index.html">Compare cheap VPS prices →</a></p>
+<p class="aff">Some links on this page are affiliate links. If you buy through them we may earn a commission at no extra cost to you.</p>
+<footer>VPS SEO Cluster · honest VPS guides for self-hosters and automation builders</footer>
+</body></html>
