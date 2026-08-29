@@ -29,8 +29,8 @@ code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px}pre code{backgrou
 <li><strong>Run forever:</strong> a workflow that ticks every 5 minutes costs the same as one that never runs.</li>
 </ul>
 
-<h2>The 1-command Docker setup</h2>
-<p>n8n runs great in Docker. On a fresh VPS:</p>
+<h2>The 1-command Docker setup (local/test only)</h2>
+<p>n8n runs great in Docker. For a quick local test on a fresh VPS:</p>
 <pre><code># assume Docker is installed — see our Docker starter stack
 mkdir -p ~/n8n && cd ~/n8n
 docker run -d --name n8n \
@@ -38,13 +38,37 @@ docker run -d --name n8n \
   -v n8n_data:/home/node/.n8n \
   -e N8N_SECURE_COOKIE=false \
   n8nio/n8n</code></pre>
-<p>Then open <code>http://your-vps:5678</code>. That's it.</p>
+<div class="note"><p><strong>⚠️ Local/test only — do not use this for production.</strong> This binds n8n on port <code>5678</code> with no TLS and <code>N8N_SECURE_COOKIE=false</code>. If this is exposed beyond <code>localhost</code>, anyone can hit your instance on <code>http://your-vps:5678</code> in plaintext, and the insecure-cookie flag weakens session protection. It's fine for a 10-minute smoke test on <code>127.0.0.1</code>; do <strong>not</strong> point it at a public IP.</p></div>
 
-<h2>Put it behind HTTPS with Caddy</h2>
-<p>n8n isn't a full web server, so front it with <a href="https://github.com/copernicusjones/uptime-kuma-stack" target="_blank" rel="noopener">Caddy</a> for automatic TLS:</p>
-<pre><code>automation.yourdomain.com {
+<h2>The production path: Docker Compose + Caddy (TLS)</h2>
+<p>For anything you're going to actually run automation on, front n8n with Caddy so it gets automatic HTTPS and a secure cookie. This is the setup we recommend — it's barely more work than the one-liner above and it's the difference between "runs" and "safe to run."</p>
+<pre><code># ~/n8n/docker-compose.yml  (n8n + Caddy, automatic TLS)
+services:
+  n8n:
+    image: n8nio/n8n
+    environment:
+      - N8N_HOST=automation.yourdomain.com
+      - N8N_PROTOCOL=https
+      - N8N_PORT=5678
+    volumes:
+      - n8n_data:/home/node/.n8n
+    # port 5678 stays INTERNAL — only Caddy is exposed
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+volumes:
+  n8n_data:
+  caddy_data:</code></pre>
+<pre><code># Caddyfile — automatic Let's Encrypt TLS, only port 443 exposed
+automation.yourdomain.com {
     reverse_proxy n8n:5678
 }</code></pre>
+<p>With this, n8n is only reachable internally on port <code>5678</code>; the only public exposure is port <code>443</code> (HTTPS) via Caddy. Set <code>N8N_SECURE_COOKIE=true</code> here — n8n is behind TLS, so the secure cookie is correct and expected.</p>
 
 <h2>Realistic VPS needs</h2>
 <table><tr><th>Workload</th><th>RAM</th><th>Good pick</th></tr>
